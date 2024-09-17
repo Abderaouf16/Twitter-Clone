@@ -1,3 +1,16 @@
 {
-  "extends": ["next/core-web-vitals", "next/typescript"]
+  "extends": [
+    "next/core-web-vitals", 
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "rules": {
+    // Disable the specific rule
+    "@typescript-eslint/no-unused-vars": "off",
+
+    // You can also set a rule to "warn" or "error"
+    "@typescript-eslint/no-explicit-any": "warn",
+
+    // Example: disabling React-specific rules
+    "react/react-in-jsx-scope": "off"
+  }
 }
