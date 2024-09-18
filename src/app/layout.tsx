@@ -5,6 +5,8 @@ import LeftSidebar from "../Components/Layout/leftSidebar";
 import Link from "next/link";
 import Toolbar from "../Components/Layout/Toolbar";
 import RightSidebar from "../Components/Layout/RightSidebar";
+import { Toaster } from "sonner";
+import Providers from "../lib/providers";
 
 export const metadata: Metadata = {
   title: "Twitter Clone",
@@ -18,21 +20,22 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <h1>ss</h1>
-      </head>
+
       <body>
-        <div className="mx-auto flex min-h-screen lg:max-w-5xl  ">
-          <MobileHeader />
-          <div className=" flex flex-1 md:h-screen ">
-            <LeftSidebar />
-            <main className="mt-14  overflow-y-auto border-r border-gray-200 pb-16 md:mt-0 md:w-1/2 md:pb-0 xl:w-3/5 ">
-              {children}
+        <Providers>
+          <div className="mx-auto flex min-h-screen lg:max-w-5xl  ">
+            <MobileHeader />
+            <div className=" flex flex-1 md:h-screen ">
+              <LeftSidebar />
+              <main className="mt-14  overflow-y-auto border-r border-gray-200 pb-16 md:mt-0 md:w-1/2 md:pb-0 xl:w-3/5 ">
+                {children}
+                <Toaster />
               </main>
-              <RightSidebar/>
+              <RightSidebar />
+            </div>
+            <Toolbar />
           </div>
-          <Toolbar/> 
-        </div>
+        </Providers>
       </body>
     </html>
   );
