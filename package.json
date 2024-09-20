@@ -9,9 +9,18 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@chakra-ui/react": "^2.8.2",
+    "@chakra-ui/spinner": "^2.1.0",
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@nextui-org/button": "^2.0.38",
+    "@nextui-org/spinner": "^2.0.34",
+    "@nextui-org/system": "^2.2.6",
+    "@nextui-org/theme": "^2.2.11",
     "@supabase/ssr": "^0.5.1",
     "@supabase/supabase-js": "^2.45.4",
     "drizzle-orm": "^0.33.0",
+    "framer-motion": "^11.5.5",
     "next": "^14.2.12",
     "postgres": "^3.4.4",
     "react": "^18",

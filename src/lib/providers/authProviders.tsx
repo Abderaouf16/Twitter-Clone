@@ -9,15 +9,15 @@ import { toast } from 'sonner';
 interface AuthContextValue {
    user: User | null,
    loading: boolean,
-   handeleSignOut: () => Promise<void>,
-   handeleLogin: (email: string, password: string) => Promise<void>,
-   handeleSignUp: (email: string, username: string, password: string) => Promise<void>,
+   handleSignOut: () => Promise<void>,
+   handleLogin: (email: string, password: string) => Promise<void>,
+   handleSignUp: (email: string, username: string, password: string) => Promise<void>,
    updateUser: (username: string) => Promise<{ success: boolean }>,
 
 }
 
 
-const AuthContext = createContext<AuthContextValue | null>(null);
+const AuthContext = createContext<AuthContextValue>({} as AuthContextValue );
 
 
 export default function AuthProvider({ children }: { children: React.ReactNode }) {
@@ -28,6 +28,8 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
 
    const [user, setUser] = useState<User | null>(null)
    const [loading, setLoading] = useState(true)
+
+
 
    useEffect(() => {
       const { data } = supabase.auth.onAuthStateChange((event, session) => {
@@ -45,7 +47,8 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
 
 
 
-   async function handeleSignOut () {
+
+   async function handleSignOut () {
       setLoading(true);
       const {error} = await supabase.auth.signOut()
       if(error){
@@ -57,7 +60,7 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
    }
 
  
-   async function handeleLogin(email:string, password: string) {
+   async function handleLogin(email:string, password: string) {
       setLoading(true);
       const {error} = await supabase.auth.signInWithPassword({
          email,
@@ -72,7 +75,7 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
 
    }
 
-   async function handeleSignUp(email:string, username:string, password: string) {
+   async function handleSignUp(email:string, username:string, password: string) {
       setLoading(true);
       const {error} = await supabase.auth.signUp({
          email,
@@ -117,7 +120,7 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
 
    return (
       <AuthContext.Provider value={{
-      user, loading,handeleSignOut, handeleLogin, handeleSignUp,updateUser,
+      user, loading,handleSignOut, handleLogin, handleSignUp,updateUser,
    }}>{children}</AuthContext.Provider>
 ) 
 
@@ -128,4 +131,5 @@ export function useAuth() {
    if(!context){
       throw new Error('useAuth must be used within an authprovider')
    }
+   return context
 }
