@@ -3,6 +3,7 @@ import { useAuth } from '@/src/lib/providers/authProviders';
 import React, { useState } from 'react'
 import SubmitBtn from '../../ui/SubmitBtn';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 interface AuthFormProps {
   type: "login" | "signup";
@@ -10,18 +11,27 @@ interface AuthFormProps {
 
 
 export default function AuthForm({ type }: AuthFormProps) {
-
+const router = useRouter()
   const { handleLogin, handleSignUp, loading } = useAuth()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [email, setEmail] = useState('')
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     if (type === "login") {
-      handleLogin(email, password)
+     const {success} = await handleLogin(email, password)
+     if(success){
+       router.replace("/") // we replace because we don't want the user to go Back
+     }
     } if (type === "signup") {
-      handleSignUp(email, username, password)
+      const {success} = await  handleSignUp(email, username, password)
+      console.log("Signup Success:", success); // Debug log
+
+      if(success){
+       router.replace("/") // we replace because we don't want the user to go Back
+     }
+
     }
   }
   return (

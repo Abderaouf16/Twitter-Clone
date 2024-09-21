@@ -1,10 +1,32 @@
-import { createServerClient, type CookieOptions } from '@supabase/ssr'
+import { CookieOptions } from '@supabase/ssr'
+import { createServerClient as createSupabaseServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 
-export function createClient() {
+
+export function createReadOnlyServerClient() {
+  const cookieStore = cookies()
+  
+  return createSupabaseServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+
+    {
+      cookies: {
+        getAll() {
+          return cookieStore.getAll()
+        }
+      }
+    }
+  )
+
+}
+
+
+
+export function createServerClient() {
   const cookieStore = cookies()
 
-  return createServerClient(
+  return createSupabaseServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
