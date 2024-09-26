@@ -1,16 +1,19 @@
 import React from "react";
 import { LuUser } from "react-icons/lu";
+import ProfileLink from "../profile/ProfileLink";
 
 interface AvatarProps {
   profileId?: string;
   username?: string;
   size?: number;
+  link?: boolean;
 }
 
 export default function Avatar({
   profileId,
   username,
   size = 48,
+  link = true,
 }: AvatarProps) {
   if (!profileId || !username) {
     return (
@@ -22,16 +25,25 @@ export default function Avatar({
       </div>
     );
   }
-  const avatarPlaceHolder = `https://api.dicebear.com/9.x/adventurer/svg?seed=${profileId}`
+  const avatarPlaceHolder = `https://api.dicebear.com/9.x/adventurer/svg?seed=${profileId}`;
+
+  if (link) {
+    return (
+      <ProfileLink username={username}>
+        <img
+          src={avatarPlaceHolder}
+          alt={username}
+          style={{ width: size, height: size, borderRadius: "50%" }}
+        />
+      </ProfileLink>
+    );
+  }
 
   return (
     <img
       src={avatarPlaceHolder}
       alt={username}
-      style={{ width: size, height: size, borderRadius: '50%' }}
+      style={{ width: size, height: size, borderRadius: "50%" }}
     />
   );
-  
-
-
 }
